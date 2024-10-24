@@ -1,19 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('page-title', $comic->title)
+
+@section('main-content')
+
+<div class="container w-50 mx-auto my-5">
+    
+    <div class="mb-4">
+        <a href="{{ route('comics.index') }}" class="btn btn-primary w-100">
+            Torna alla home
+        </a>
+
+        <a href="{{ route('comics.edit', ['comic' => $comic->id]) }}" class="btn btn-warning my-3 w-100">
+            Modifica
+        </a>
+    </div>
+
     <div class="card">
+        <h1 class="text-center">
+            {{ $comic->title }}
+        </h1>
         <div class="card-body">
             <ul>
-                <li>Prezzo: </li>
-                <li>Serie:</li>
-                <li>Data vendita:</li>
-                <li>Tipo:</li>
+                <li>
+                    Serie: {{ $comic->series }}
+                </li>
+                <li>
+                    Prezzo: {{ $comic->price }}
+                </li>
+                <li>
+                    Data vendita: {{ $comic->sale_date }}
+                </li>
+                <li>
+                    Tipo: {{ $comic->type }}
+                </li>
+
                 <li>Artisti:
                     <ul>
                         @foreach (json_decode($comic->artists, true) as $artist)
@@ -29,7 +50,11 @@
                     </ul>
                 </li>
             </ul>
+            <p>
+                Descrizione: {{ $comic->description }}
+            </p>
+            <img src="{{ $comic->thumb }}" alt="{{ $comic->title }}" class="card-img-bottom">
         </div>
     </div>
-</body>
-</html>
+</div>
+
