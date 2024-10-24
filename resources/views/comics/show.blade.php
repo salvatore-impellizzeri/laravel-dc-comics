@@ -14,6 +14,16 @@
         <a href="{{ route('comics.edit', ['comic' => $comic->id]) }}" class="btn btn-warning my-3 w-100">
             Modifica
         </a>
+
+        <div>
+            <form onsubmit="return confirm('Sei sicuro di voler eliminare {{ $comic->title }}?')" action="{{ route('comics.destroy', ['comic' => $comic->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger w-100">
+                    Elimina
+                </button>
+            </form>
+        </div>
     </div>
 
     <div class="card">
