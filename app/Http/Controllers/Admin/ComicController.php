@@ -15,7 +15,7 @@ class ComicController extends Controller
      */
     public function index()
     {
-        $comics = Comic::get();
+        $comics = Comic::all();
 
         return view('comics.index', compact('comics'));
     }
@@ -43,24 +43,15 @@ class ComicController extends Controller
         $comic->series = $data['series'];
         $comic->sale_date = $data['sale_date'];
         $comic->type = $data['type'];
-           
-        if (!empty($data['artists'])) {
-            $comic->artists = json_encode(array_map('trim', explode(',', $data['artists'])));
-        } else {
-            $comic->artists = null;
-        }
-
-        if (!empty($data['writers'])) {
-            $comic->writers = json_encode(array_map('trim', explode(',', $data['writers'])));
-        } else {
-            $comic->writers = null;
-        }
-
+        $jsonArtists= json_encode($data['artists']);
+        $comic->artists = $jsonArtists;
+        $jsonWriters = json_encode($data['writers']);
+        $comic->writers = $jsonWriters;
         $comic->save();
 
-        // $comic = Comic::create($data);
+        $comic = Comic::create($data);
 
-        return redirect()->route('comics.index');
+        return redirect()->route('comics.show', ['comic'=> $comic->id]);
     }
 
     /**
@@ -89,6 +80,7 @@ class ComicController extends Controller
     {
         $data = $request->all();
 
+        $comic = new Comic();
         $comic->title = $data['title'];
         $comic->description = $data['description'];
         $comic->thumb = $data['thumb'];
@@ -96,19 +88,10 @@ class ComicController extends Controller
         $comic->series = $data['series'];
         $comic->sale_date = $data['sale_date'];
         $comic->type = $data['type'];
-           
-        if (!empty($data['artists'])) {
-            $comic->artists = json_encode(array_map('trim', explode(',', $data['artists'])));
-        } else {
-            $comic->artists = null;
-        }
-
-        if (!empty($data['writers'])) {
-            $comic->writers = json_encode(array_map('trim', explode(',', $data['writers'])));
-        } else {
-            $comic->writers = null;
-        }
-
+        $jsonArtists= json_encode($data['artists']);
+        $comic->artists = $jsonArtists;
+        $jsonWriters = json_encode($data['writers']);
+        $comic->writers = $jsonWriters;
         $comic->save();
 
         return redirect()->route('comics.show', ['comic' => $comic->id]);
