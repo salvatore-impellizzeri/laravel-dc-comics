@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ComicController;
+use App\Http\Controllers\Admin\ComicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,5 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('comics.index', compact('comics'));
+});
 
-Route::resource('/', ComicController::class);
+
+Route::resource('comics', ComicController::class);

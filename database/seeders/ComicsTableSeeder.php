@@ -14,25 +14,23 @@ class ComicsTableSeeder extends Seeder
      */
     public function run(): void
     {
+        Comic::truncate();
+
         $comics = config('comics');
 
         foreach ($comics as $comic) {
-            $newComic = new Comic();
-            $newComic->title = $comic['title'];
-            $newComic->description = $comic['description'];
-            $newComic->thumb = $comic['thumb'];
-            $explodedPrice = explode('$', $comic['price']);
-            if (isset($explodedPrice[1])) {
-                $newComic->price = floatval($explodedPrice[1]);
-            } else {
-                $newComic->price = null;
-            }            
-            $newComic->series = $comic['series'];
-            $newComic->sale_date = $comic['sale_date'];
-            $newComic->type = $comic['type'];
-            $newComic->artists = json_encode($comic['artists']);
-            $newComic->writers = json_encode($comic['writers']);
-            $newComic->save();
+            $comics = new Comic();
+            $comics->title = $comic['title'];
+            $comics->description = $comic['description'];
+            $comics->thumb = $comic['thumb'];
+            $priceNumber = floatval(substr($comic['price'],1));   
+            $comics->price = $priceNumber;
+            $comics->series = $comic['series'];
+            $comics->sale_date = $comic['sale_date'];
+            $comics->type = $comic['type'];
+            $comics->artists = json_encode($comic['artists']);
+            $comics->writers = json_encode($comic['writers']);
+            $comics->save();
         }  
     }
 }
