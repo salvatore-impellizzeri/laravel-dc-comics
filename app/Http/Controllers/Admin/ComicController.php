@@ -43,13 +43,13 @@ class ComicController extends Controller
         $comic->series = $data['series'];
         $comic->sale_date = $data['sale_date'];
         $comic->type = $data['type'];
-        $jsonArtists= json_encode($data['artists']);
+        $explodeArtists = explode(',', $data['artists']);
+        $jsonArtists= json_encode($explodeArtists);
         $comic->artists = $jsonArtists;
-        $jsonWriters = json_encode($data['writers']);
+        $explodeWriters = explode(',', $data['writers']);
+        $jsonWriters = json_encode($explodeWriters);
         $comic->writers = $jsonWriters;
         $comic->save();
-
-        $comic = Comic::create($data);
 
         return redirect()->route('comics.show', ['comic'=> $comic->id]);
     }
@@ -80,7 +80,6 @@ class ComicController extends Controller
     {
         $data = $request->all();
 
-        $comic = new Comic();
         $comic->title = $data['title'];
         $comic->description = $data['description'];
         $comic->thumb = $data['thumb'];
@@ -88,9 +87,11 @@ class ComicController extends Controller
         $comic->series = $data['series'];
         $comic->sale_date = $data['sale_date'];
         $comic->type = $data['type'];
-        $jsonArtists= json_encode($data['artists']);
+        $explodeArtists = explode(',', $data['artists']);
+        $jsonArtists= json_encode($explodeArtists);
         $comic->artists = $jsonArtists;
-        $jsonWriters = json_encode($data['writers']);
+        $explodeWriters = explode(',', $data['writers']);
+        $jsonWriters = json_encode($explodeWriters);
         $comic->writers = $jsonWriters;
         $comic->save();
 
